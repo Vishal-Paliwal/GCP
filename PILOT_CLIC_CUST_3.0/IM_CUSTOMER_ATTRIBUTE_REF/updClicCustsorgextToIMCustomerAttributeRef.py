@@ -7,12 +7,12 @@ from apache_beam.options.pipeline_options import StandardOptions
 
 output_table = 'automatic-asset-253215:CORE.IM_CUSTOMER_ATTRIBUTE_REF'
 dataflow_options = {'--project=automatic-asset-253215',
-                    '--job_name=xfm-vustgclic-custsorgext-to-imcustomerattributeref',
+                    '--job_name=upd-stgclic-custsorgext-to-imcustomerattributeref',
                     '--temp_location=gs://raw_source_files/Customers/temp',
                     '--staging_location=gs://raw_source_files/Customers/temp/stg'}
 options = PipelineOptions(dataflow_options)
 gcloud_options = options.view_as(GoogleCloudOptions)
-options.view_as(StandardOptions).runner = 'direct'
+options.view_as(StandardOptions).runner = 'dataflow'
 
 
 def printval(value):
