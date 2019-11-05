@@ -1,6 +1,5 @@
 from __future__ import absolute_import
 import logging
-from abc import ABC
 import apache_beam as beam
 from apache_beam.options.pipeline_options import PipelineOptions
 from apache_beam.options.pipeline_options import GoogleCloudOptions
@@ -8,7 +7,7 @@ from apache_beam.options.pipeline_options import StandardOptions
 
 output_table = 'automatic-asset-253215:CORE.IM_CUSTOMER_ATTRIBUTE_REF'
 dataflow_options = {'--project=automatic-asset-253215',
-                    '--job_name-upd-stgclic-custscontact-to-imcustomerattributeref',
+                    '--job_name=upd-stgclic-custscontact-to-imcustomerattributeref',
                     '--temp_location=gs://raw_source_files/Customers/temp',
                     '--staging_location=gs://raw_source_files/Customers/temp/stg'}
 options = PipelineOptions(dataflow_options)
@@ -45,7 +44,7 @@ class LeftJoin(beam.PTransform):
                 )
 
 
-class UnnestCoGrouped(beam.DoFn, ABC):
+class UnnestCoGrouped(beam.DoFn):
     """This DoFn class unnests and emits the CogroupBykey output"""
 
     def process(self, input_element, src_pipeline, join_pipeline):
