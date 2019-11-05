@@ -11,11 +11,10 @@ dataflow_options = {'--project=automatic-asset-253215',
                     '--staging_location=gs://raw_source_files/Customers/temp/stg'}
 options = PipelineOptions(dataflow_options)
 gcp_options = options.view_as(GoogleCloudOptions)
-options.view_as(StandardOptions).runner = 'direct'
+options.view_as(StandardOptions).runner = 'dataflow'
 
 output_table = 'automatic-asset-253215:CORE.IM_CUSTOMER_ATTRIBUTE_REF'
 p = beam.Pipeline(options=options)
-srg_key_cnt = 0
 
 
 def printVal(value):
@@ -32,8 +31,6 @@ def lookup(row,cust_ids):
 
 def filter_out_nones(row):
     if row is not None:
-        global srg_key_cnt
-        srg_key_cnt = srg_key_cnt + 1
         yield row
     else:
         print('Filtering out the None values...')
@@ -93,10 +90,10 @@ def run():
         query=source_custsorgext_query,use_standard_sql=True))
      | 'Lookup' >> beam.Map(lookup,AsDict(lookup_data))
      | 'Filter' >> beam.ParDo(filter_out_nones)
-     # | 'Insert Records' >> beam.io.WriteToBigQuery(
-     #                  output_table,
-     #                  write_disposition=beam.io.BigQueryDisposition.WRITE_APPEND,
-     #                  create_disposition=beam.io.BigQueryDisposition.CREATE_NEVER)
+     | 'Insert Records' >> beam.io.WriteToBigQuery(
+                       output_table,
+                       write_disposition=beam.io.BigQueryDisposition.WRITE_APPEND,
+                       create_disposition=beam.io.BigQueryDisposition.CREATE_NEVER)
      )
 
     p.run().wait_until_finish()
