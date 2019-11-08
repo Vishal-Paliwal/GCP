@@ -82,7 +82,7 @@ def run():
         query=customer_attrbute_ref_data,
         use_standard_sql=True))
 
-    # ------- UPDATING IM_CUSTOMER_ATTRIBUTE_REF TABLE FROM STG_CLIC_CUSTSORGEXT TABLE ----------
+    # ------- UPDATING IM_CUSTOMER_ATTRIBUTE_REF TABLE FROM IM_CUSTOMER_ADDRESS_SCD TABLE ----------
 
     SHIPADDR0_addressSCD_data = """SELECT
               CUSTOMER_ADDRESS_KEY AS BILLING_ADDRESS_KEY,
