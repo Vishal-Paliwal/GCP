@@ -117,7 +117,7 @@ def run():
     CURRENT_DATETIME()) AS INT64) AS INS_BATCH_NBR,
   '0' AS Privacy_Ind
 FROM
-  `automatic-asset-253215.STAGE.STG_CLIC_CUSTADDRORG` a
+  `automatic-asset-253215.STAGE.STG_CLIC_CUSTADDRORG` a,
   `automatic-asset-253215.STAGE.STG_CLIC_SURROGKEYS` srg_key
           WHERE srg_key.TABLE_NAME = "IM_CUSTOMER_ADDRESS_SCD"
    """
