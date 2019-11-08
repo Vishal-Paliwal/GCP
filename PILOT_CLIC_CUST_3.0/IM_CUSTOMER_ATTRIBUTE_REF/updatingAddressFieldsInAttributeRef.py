@@ -1,3 +1,16 @@
+########################################################################################################
+#
+#     Author          :     Vishal Paliwal
+#     Description     :     This Script updates Customer Address Fields in the 
+#                           IM_CUSTOMER_ATTRIBUTE_REF_TABLE from IM_CUSTOMER_ADDRESS_SCD Table.
+#     Version         :     1.0
+#     Created         :     08.11.2019
+#     Modified        :     08.11.2019
+#
+#     P.S: This script points to a specific GCP environment, 
+#          for running it in a different environment make suitable changes in some configuration fields. 
+#########################################################################################################
+
 from __future__ import absolute_import
 import logging
 import apache_beam as beam
