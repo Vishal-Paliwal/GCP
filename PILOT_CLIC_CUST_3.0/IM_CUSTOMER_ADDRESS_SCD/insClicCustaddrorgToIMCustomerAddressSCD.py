@@ -1,3 +1,16 @@
+########################################################################################################
+#
+#     Author          :     Vishal Paliwal
+#     Description     :     This Script inserts records into the IM_CUSTOMER_ADDRESS_SCD Table  
+#                           from STG_CLIC_CUSTADDRORG Table.
+#     Version         :     1.0
+#     Created         :     05.11.2019
+#     Modified        :     05.11.2019
+#
+#     P.S: This script points to a specific GCP environment, 
+#          for running it in a different environment make suitable changes in some configuration fields. 
+#########################################################################################################
+
 import apache_beam as beam
 from apache_beam.options.pipeline_options import PipelineOptions
 from apache_beam.options.pipeline_options import GoogleCloudOptions
@@ -68,7 +81,7 @@ def filter_null(element):
 
 def run():
     address_scd_query = """SELECT
-  '0' AS CUSTOMER_ADDRESS_KEY,
+  (srg_key.MAX_VALUE_KEY + ROW_NUMBER() OVER()) AS CUSTOMER_ADDRESS_KEY,
   '' AS CUSTOMER_KEY,
   CAST(a.HSN_ACCT_NUM AS INT64) AS CUSTOMER_ID,
   a.ADDRESS_NAME AS ADDR_NAME,
@@ -104,7 +117,10 @@ def run():
     CURRENT_DATETIME()) AS INT64) AS INS_BATCH_NBR,
   '0' AS Privacy_Ind
 FROM
-  `automatic-asset-253215.STAGE.STG_CLIC_CUSTADDRORG` a"""
+  `automatic-asset-253215.STAGE.STG_CLIC_CUSTADDRORG` a
+  `automatic-asset-253215.STAGE.STG_CLIC_SURROGKEYS` srg_key
+          WHERE srg_key.TABLE_NAME = "IM_CUSTOMER_ADDRESS_SCD"
+   """
 
     Attribute_ref_query = """SELECT
     CUSTOMER_KEY,
