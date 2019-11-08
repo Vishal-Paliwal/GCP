@@ -1,3 +1,16 @@
+########################################################################################################
+#
+#     Author          :     Vishal Paliwal
+#     Description     :     This Script initially inserts records into the IM_CUSTOMER_ATTRIBUTE_REF Table  
+#                           from STG_CLIC_CUSTSORGEXT Table.
+#     Version         :     1.0
+#     Created         :     21.10.2019
+#     Modified        :     04.11.2019
+#
+#     P.S: This script points to a specific GCP environment, 
+#          for running it in a different environment make suitable changes in some configuration fields. 
+#########################################################################################################
+
 import apache_beam as beam
 from apache_beam.options.pipeline_options import PipelineOptions
 from apache_beam.options.pipeline_options import GoogleCloudOptions
