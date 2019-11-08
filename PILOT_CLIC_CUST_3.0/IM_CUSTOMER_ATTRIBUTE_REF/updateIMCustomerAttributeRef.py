@@ -1,3 +1,16 @@
+########################################################################################################
+#
+#     Author          :     Vishal Paliwal
+#     Description     :     This Script updates various Fields in the IM_CUSTOMER_ATTRIBUTE_REF Table from 
+#                           STG_CLIC_CUSTSORGEXT, STG_CLIC_CUSTCONTACT and STG_CLIC_CUSTCONTACTHIST Table.
+#     Version         :     1.0
+#     Created         :     05.11.2019
+#     Modified        :     08.11.2019
+#
+#     P.S: This script points to a specific GCP environment, 
+#          for running it in a different environment make suitable changes in some configuration fields. 
+#########################################################################################################
+
 from __future__ import absolute_import
 import logging
 import apache_beam as beam
@@ -190,7 +203,7 @@ def run():
       """
 
     merged_data = """SELECT
-      CAST(d.HSN_ACCT_NUM AS INT64) AS CUSTOMER_ID,
+      CAST(d.DELETED_HSN_ACCT_NUM AS INT64) AS CUSTOMER_ID,
       CAST(d.HSN_ACCT_NUM AS INT64) AS MERGED_SOURCE_ACCT_ID,
       d.ROW_CREATED_DATE AS MERGED_DT,
       '1' AS MERGED_IND,
