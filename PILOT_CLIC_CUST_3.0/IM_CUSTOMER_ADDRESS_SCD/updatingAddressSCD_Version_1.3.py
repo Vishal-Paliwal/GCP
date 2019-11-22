@@ -27,7 +27,7 @@ dataflow_options = {'--project=hsni-dev-edw',
 					
 options = PipelineOptions(dataflow_options)
 gcp_options = options.view_as(GoogleCloudOptions)
-options.view_as(StandardOptions).runner = 'direct'
+options.view_as(StandardOptions).runner = 'dataflow'
 
 output_table = 'hsni-dev-edw:EDW_STG_US.IM_CUSTOMER_ADDRESS_SCD_GCP'
 p = beam.Pipeline(options=options)
